@@ -61,7 +61,9 @@ function lookupAddressGeo(geoOrAddress) {
 
 function addClickListener(cb) {
     gMap.addListener('click', (mapsMouseEvent) => {
+      
         const geo = { lat: mapsMouseEvent.latLng.lat(), lng: mapsMouseEvent.latLng.lng() }
+        console.log('addClickListener',geo);
         lookupAddressGeo(geo).then(cb)
     })
 }

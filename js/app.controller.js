@@ -101,7 +101,8 @@ function onSearchAddress(ev) {
 }
 
 function onAddLoc(geo) {
-    const locName = prompt('Loc name', geo.address || 'Just a place')
+console.log('geo',geo);
+    const locName = prompt('Location name', geo.address || 'Just a place')
     if (!locName) return
 
     const loc = {
