@@ -55,6 +55,6 @@ button:hover {
     background-color: azure;
 }
 
-h4 {
+.change-theme-modal h4 {
     color: #000;
 }
