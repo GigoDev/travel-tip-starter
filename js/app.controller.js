@@ -16,6 +16,7 @@ window.app = {
     onShareLoc,
     onSetSortBy,
     onSetFilterBy,
+    onSubmit
 }
 
 function onInit() {
@@ -24,7 +25,9 @@ function onInit() {
     mapService.initMap()
         .then(() => {
             // onPanToTokyo()
-            mapService.addClickListener(onAddLoc)
+            mapService.addClickListener((res)=>{
+                onAddLoc(res)
+            })
         })
         .catch(err => {
             console.error('OOPs:', err)
@@ -71,7 +74,7 @@ function renderLocs(locs) {
 function onRemoveLoc(locId) {
     const isConfirmed = confirm('Are you sure?')
     if (!isConfirmed) return
-    
+
     locService.remove(locId)
         .then(() => {
             flashMsg('Location removed')
@@ -98,16 +101,53 @@ function onSearchAddress(ev) {
 }
 
 function onAddLoc(geo) {
-    const locName = prompt('Loc name', geo.address || 'Just a place')
-    if (!locName) return
+    console.log(geo)
+    let elModal = document.querySelector('.modal')
+    elModal.dataset.geo = JSON.stringify(geo)
+    elModal.showModal()
+}
+
+// function onAddLoc(geo) {
+//     const locName = prompt('Loc name', geo.address || 'Just a place')
+//     if (!locName) return
+
+//     const loc = {
+//         name: locName,
+//         rate: +prompt(`Rate (1-5)`, '3'),
+//         geo
+//     }
+//     locService.save(loc)
+//         .then((savedLoc) => {
+//             flashMsg(`Added Location (id: ${savedLoc.id})`)
+//             utilService.updateQueryParams({ locId: savedLoc.id })
+//             loadAndRenderLocs()
+//         })
+//         .catch(err => {
+//             console.error('OOPs:', err)
+//             flashMsg('Cannot add location')
+//         })
+// }
+
+function onSubmit(ev) {
+    ev.preventDefault()
+
+    const elModal = document.querySelector('.modal')
+    const locName = document.querySelector('.name-input').value
+    const rate = document.querySelector('.rate-input').value
+    const geo = JSON.parse(elModal.dataset.geo)
+    console.log(geo)
+
 
     const loc = {
         name: locName,
-        rate: +prompt(`Rate (1-5)`, '3'),
+        rate,
         geo
     }
+
+
     locService.save(loc)
         .then((savedLoc) => {
+            elModal.close()
             flashMsg(`Added Location (id: ${savedLoc.id})`)
             utilService.updateQueryParams({ locId: savedLoc.id })
             loadAndRenderLocs()
@@ -116,6 +156,7 @@ function onAddLoc(geo) {
             console.error('OOPs:', err)
             flashMsg('Cannot add location')
         })
+
 }
 
 function loadAndRenderLocs() {

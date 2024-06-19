@@ -39,6 +39,11 @@ function lookupAddressGeo(geoOrAddress) {
     url += (geoOrAddress.lat) ? `latlng=${geoOrAddress.lat},${geoOrAddress.lng}` :
         `address=${geoOrAddress}`
 
+    // var url = `https://maps.googleapis.com/maps/api/geocode/json?`
+    // url += (geoOrAddress.lat) ? `latlng=${geoOrAddress.lat},${geoOrAddress.lng}` :
+    //     `address=${geoOrAddress}`
+    // url += `&key=${API_KEY}`
+
     return fetch(url)
         .then(res => res.json())
         .then(res => {
