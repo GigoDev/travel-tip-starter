@@ -16,6 +16,9 @@ window.app = {
     onShareLoc,
     onSetSortBy,
     onSetFilterBy,
+    onOpenModal,
+    onChangeTheme,
+    onCloseModal,
     onSubmit
 }
 
@@ -307,6 +310,9 @@ function renderLocStats() {
     locService.getLocCountByRateMap().then(stats => {
         handleStats(stats, 'loc-stats-rate')
     })
+    locService.getLocCountByUpdatedMap().then(stats => {
+        handleStats(stats, 'loc-stats-updated')
+    })
 }
 
 function handleStats(stats, selector) {
@@ -357,4 +363,21 @@ function cleanStats(stats) {
         return acc
     }, [])
     return cleanedStats
+}
+
+
+function onOpenModal() {
+    let elModal = document.querySelector('.change-theme-modal')
+    elModal.style.display = 'block'
+}
+
+function onCloseModal() {
+    let elModal = document.querySelector('.change-theme-modal')
+    elModal.style.display = 'none'
+}
+
+function onChangeTheme() {
+    let elInput = document.querySelector('.change-theme')
+    document.querySelector('body').style.backgroundColor = elInput.value
+    onCloseModal()
 }

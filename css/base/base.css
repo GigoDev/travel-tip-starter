@@ -14,7 +14,8 @@ header h1 {
     margin: 0;
 }
 
-input[type=text],input[type=number] {
+input[type=text],
+input[type=number] {
     line-height: 2em;
     background-color: var(--color1);
     border: 0;
@@ -45,3 +46,15 @@ button:hover {
     font-size: .8em;
 }
 
+.change-theme-modal {
+    display: none;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    padding: 20px;
+    background-color: azure;
+}
+
+.change-theme-modal h4 {
+    color: #000;
+}
