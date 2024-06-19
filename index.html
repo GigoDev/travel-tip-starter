@@ -32,12 +32,13 @@
                 <section class="loc-filter">
                     <div>
                         <input name="filter-by-txt" type="text" placeholder="Search location"
-                            oninput="app.onSetFilterBy({txt: this.value})" >
+                            oninput="app.onSetFilterBy({txt: this.value})">
                     </div>
                     <div>
                         <label>
                             Min Rate:
-                            <input name="filter-by-rate" type="range" min="0" max="5" value="0" class="filter-rate-range"
+                            <input name="filter-by-rate" type="range" min="0" max="5" value="0"
+                                class="filter-rate-range"
                                 onchange="this.title=this.value;app.onSetFilterBy({minRate: this.value})" />
                         </label>
                     </div>
@@ -80,6 +81,16 @@
     </main>
     <pre class="debug" hidden></pre>
     <div class="user-msg"></div>
+
+    <dialog class="modal">
+        <form onsubmit="app.onSubmit(event)" method="dialog">
+            <input class="name-input" type="text" placeholder="name">
+            <input class="rate-input" type="text" placeholder="rate">
+            <button >Submit</button>
+        </form>
+    </dialog>
+</main>
+
     <script type="module" src="js/app.controller.js"></script>
 </body>
 
