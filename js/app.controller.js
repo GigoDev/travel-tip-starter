@@ -16,6 +16,9 @@ window.app = {
     onShareLoc,
     onSetSortBy,
     onSetFilterBy,
+    onOpenModal,
+    onChangeTheme,
+    onCloseModal,
 }
 
 function onInit() {
@@ -223,7 +226,7 @@ function getFilterByFromQueryParams() {
     const queryParams = new URLSearchParams(window.location.search)
     const txt = queryParams.get('txt') || ''
     const minRate = queryParams.get('minRate') || 0
-    locService.setFilterBy({txt, minRate})
+    locService.setFilterBy({ txt, minRate })
 
     document.querySelector('input[name="filter-by-txt"]').value = txt
     document.querySelector('input[name="filter-by-rate"]').value = minRate
@@ -262,6 +265,9 @@ function onSetFilterBy({ txt, minRate }) {
 function renderLocStats() {
     locService.getLocCountByRateMap().then(stats => {
         handleStats(stats, 'loc-stats-rate')
+    })
+    locService.getLocCountByUpdatedMap().then(stats => {
+        handleStats(stats, 'loc-stats-updated')
     })
 }
 
@@ -313,4 +319,21 @@ function cleanStats(stats) {
         return acc
     }, [])
     return cleanedStats
+}
+
+
+function onOpenModal() {
+    let elModal = document.querySelector('.change-theme-modal')
+    elModal.style.display = 'block'
+}
+
+function onCloseModal() {
+    let elModal = document.querySelector('.change-theme-modal')
+    elModal.style.display = 'none'
+}
+
+function onChangeTheme() {
+    let elInput = document.querySelector('.change-theme')
+    document.querySelector('body').style.backgroundColor = elInput.value
+    onCloseModal()
 }
